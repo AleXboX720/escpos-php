@@ -1,0 +1,31 @@
+<?php
+
+namespace Mike42\Escpos;
+
+use Exception;
+use InvalidArgumentException;
+use Mike42\Escpos\PrintBuffers\PrintBuffer;
+use Mike42\Escpos\PrintBuffers\EscposPrintBuffer;
+use Mike42\Escpos\PrintConnectors\PrintConnector;
+use Mike42\Escpos\CapabilityProfile;
+
+/**
+ * Main class for ESC/POS code generation
+ */
+ class Printer
+    /**
+     * ASCII HORIZONTAL TAB escape control character
+     */
+    const HT = "\x09";
+    
+     public function setHorizontalTab($tabs)
+    {
+        $this -> connector -> write(self::ESC . "D". chr(0));		//RESET CONFIGURACION ANTERIOR DE TABULACION HORIZONTAL
+        $this -> connector -> write(self::ESC . "D". $tabs);		//CARGAR TODAS LAS COLUMNAS o TABS
+    }
+	
+	public function tabular()
+    {
+        $this -> connector -> write(self::HT);
+    }
+}
