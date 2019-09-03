@@ -25,6 +25,10 @@ use Mike42\Escpos\CapabilityProfile;
 class Printer
 {
     /**
+     * ASCII HORIZONTAL TAB
+     */
+    const HT = "\x09";
+    /**
      * ASCII null control character
      */
     const NUL = "\x00";
@@ -375,6 +379,16 @@ class Printer
         $this -> initialize();
     }
     
+    public function setHorizontalTab($tabs)
+    {
+        $this -> connector -> write(self::ESC ."D". chr(0));    //RESET CONFIG TAB OLD
+        $this -> connector -> write(self::ESC ."D". $tabs);     //SET TAB IN LINE
+    }
+    
+    public function tabularH()
+    {
+        $this -> connector -> write(self::HT);                  //SET ESC TAB
+    }
     /**
      * Print a barcode.
      *
